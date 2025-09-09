@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PatoPato🦆</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: url("https://usagif.com/wp-content/uploads/2022/4hv9xm/dancing-duck-acegifcom-40.gif") no-repeat center center;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .message {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      font-size: 26px;
+      color: #ff9e00;
+      font-weight: bold;
+      margin-bottom: 20px;
+      animation: bounce 1s infinite;
+      z-index: 2;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-15px); }
+    }
+
+    #bubbles-text {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .text-bubble {
+      position: absolute;
+      font-size: 18px;
+      font-family: Cursive, sans-serif;
+      color: #143242;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 10px 20px;
+      border-radius: 25px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      animation: floatText 8s ease-in-out forwards;
+      white-space: nowrap;
+    }
+
+    @keyframes floatText {
+      0% { opacity: 0; transform: scale(0.5) translateY(0); }
+      50% { opacity: 1; transform: scale(1.2) translateY(-50px); }
+      100% { opacity: 0; transform: scale(1) translateY(-120px); }
+    }
+
+    /* Botão pato fixo no canto */
+    #play-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 50px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 3;
+      transition: transform 0.2s ease;
+    }
+
+    #play-button:hover {
+      transform: scale(1.2);
+    }
+
+    /* Animação do pato dançando */
+    @keyframes duck-dance {
+      0%   { transform: rotate(0deg); }
+      25%  { transform: rotate(-15deg); }
+      50%  { transform: rotate(0deg); }
+      75%  { transform: rotate(15deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .dancing {
+      animation: duck-dance 0.6s infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="message">patopato 🦆✨</div>
+  <div id="bubbles-text"></div>
+
+  <!-- Botão de pato fixo -->
+  <button id="play-button">🦆</button>
+
+  <!-- Música escondida -->
+  <audio id="bg-music" src="sys.mp3" loop></audio>
+
+  <script>
+    const messages = [
+      "Quack quack 💛",
+      "Patinho feliz 🦆",
+      "Você é incrível 💕",
+      "Pato feliz 😄",
+      "Sorria sempre!",
+      "Fofa demais ✨",
+      "Devorador de mundos 🌍",
+      "Causador das trevas 🌑"
+    ];
+
+    function createTextBubble() {
+      const bubble = document.createElement("div");
+      bubble.className = "text-bubble";
+      bubble.innerText = messages[Math.floor(Math.random() * messages.length)];
+
+      bubble.style.left = Math.random() * 80 + "vw";
+      bubble.style.top  = Math.random() * 80 + "vh";
+
+      document.getElementById("bubbles-text").appendChild(bubble);
+
+      setTimeout(() => bubble.remove(), 8000);
+    }
+
+    setInterval(createTextBubble, 1000);
+
+    // Controle do botão pato
+    const button = document.getElementById("play-button");
+    const music = document.getElementById("bg-music");
+    let isPlaying = false;
+
+    button.addEventListener("click", () => {
+      if (isPlaying) {
+        music.pause();
+        button.textContent = "🦆"; // pato normal
+        button.classList.remove("dancing");
+      } else {
+        music.play();
+        button.textContent = "🎵🦆"; // pato musical
+        button.classList.add("dancing");
+      }
+      isPlaying = !isPlaying;
+    });
+  </script>
+</body>
+</html>
