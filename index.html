@@ -66,11 +66,8 @@
       100% { opacity: 0; transform: scale(1) translateY(-120px); }
     }
 
-    /* Botão pato fixo no canto */
+    /* Botão pato */
     #play-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
       font-size: 50px;
       background: none;
       border: none;
@@ -83,17 +80,14 @@
       transform: scale(1.2);
     }
 
-    /* Animação do pato dançando */
-    @keyframes duck-dance {
-      0%   { transform: rotate(0deg); }
-      25%  { transform: rotate(-15deg); }
-      50%  { transform: rotate(0deg); }
-      75%  { transform: rotate(15deg); }
-      100% { transform: rotate(0deg); }
+    /* Animação do pato */
+    .dancing {
+      animation: duckDance 0.6s infinite alternate;
     }
 
-    .dancing {
-      animation: duck-dance 0.6s infinite;
+    @keyframes duckDance {
+      0%   { transform: rotate(-10deg) scale(1.1); }
+      100% { transform: rotate(10deg) scale(1.1); }
     }
   </style>
 </head>
@@ -101,7 +95,7 @@
   <div class="message">patopato 🦆✨</div>
   <div id="bubbles-text"></div>
 
-  <!-- Botão de pato fixo -->
+  <!-- Botão de pato -->
   <button id="play-button">🦆</button>
 
   <!-- Música escondida -->
@@ -151,6 +145,18 @@
       }
       isPlaying = !isPlaying;
     });
+
+    // Liberar música no primeiro toque em qualquer parte da tela
+    document.body.addEventListener("click", () => {
+      if (!isPlaying) {
+        music.play();
+        button.textContent = "🎵🦆";
+        button.classList.add("dancing");
+        isPlaying = true;
+      }
+    }, { once: true });
   </script>
 </body>
 </html>
+
+
